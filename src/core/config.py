@@ -1,5 +1,4 @@
 # ----- importable configurations @ src/core/config.py -----
-import os
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
@@ -20,6 +19,9 @@ class Settings(BaseSettings):
     # TELEPHONY service
     TWILIO_API_KEY_SID: str
     TWILIO_API_KEY_SECRET: str
+
+    # TTS service
+    ELEVENLABS_API_KEY: str
 
     class Config:
         env_file = ".env"
