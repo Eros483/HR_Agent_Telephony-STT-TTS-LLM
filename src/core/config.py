@@ -27,6 +27,10 @@ class Settings(BaseSettings):
     # Base url for application
     NGROK_URL: str
 
+    # Celery for handling workers
+    CELERY_BROKER_URL: str
+    CELERY_RESULT_BACKEND: str
+
     class Config:
         env_file = ".env"
 

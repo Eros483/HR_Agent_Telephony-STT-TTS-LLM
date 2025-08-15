@@ -27,8 +27,8 @@ class TelephonyClient:
             call_id (str): The unique identifier for the call.
         """
         try:
-            webhook_url = f"https://{settings.NGROK_URL.split('//')[1]}/twilio-voice-webhook/{call_id}"
-
+            hostname = settings.NGROK_URL.split("://")[1]
+            webhook_url = f"https://{hostname}/twilio-voice-webhook/{call_id}"
             logger.info(f"Initiating call to {to_number} with webhook url : {webhook_url}")
 
             call=self.twilio_client.calls.create(

@@ -30,27 +30,43 @@ async def get_llm_response(conversation_history: list, system_prompt: dict, end_
         str: The response from the llm
     """
     try:
-        logger.info("Generating llm response")
+        logger.info(f"Generating LLM response with {len(conversation_history)} messages")
+        logger.info(f"vLLM base URL: {settings.VLLM_API_BASE}")
+        logger.info(f"Model name: {settings.LLM_MODEL_NAME}")
 
-        messages_to_send=[system_prompt] + conversation_history
+        messages_to_send = [system_prompt] + conversation_history
+        logger.info(f"Messages to send: {messages_to_send}")
+        logger.info(f"Sending {len(messages_to_send)} messages to LLM")
 
-        stream = await llm_client.chat.completions.create(
-            model=settings.LLM_MODEL_NAME,
-            messages=messages_to_send,
-            stream=True,
-            stop=["\n", end_of_call_phrase],
-            temperature=temperature,
-            max_tokens=max_tokens
-        )
+        # ADD: Test connection first
+        try:
+            stream = await llm_client.chat.completions.create(
+                model=settings.LLM_MODEL_NAME,
+                messages=messages_to_send,
+                stream=True,
+                stop=["\n", end_of_call_phrase],
+                temperature=temperature,
+                max_tokens=max_tokens
+            )
+            logger.info("Successfully created LLM stream")
+        except Exception as e:
+            logger.error(f"Failed to create LLM stream: {e}")
+            raise
 
+        chunk_count = 0
         async for chunk in stream:
-            content=chunk.choices[0].delta.content
+            chunk_count += 1
+            content = chunk.choices[0].delta.content
             if content:
+                logger.debug(f"LLM chunk {chunk_count}: {repr(content[:50])}")
+                logger.info(f"LLM chunk {chunk_count}: {content}")
                 yield content
 
-        logger.info("LLM stream finished")
+        logger.info(f"LLM stream finished with {chunk_count} chunks")
     
     except Exception as e:
+        logger.error(f"LLM response generation failed: {e}")
+        logger.error(f"Exception type: {type(e).__name__}")
         raise CustomException("failed to generate llm response", e)
 
 async def main():
