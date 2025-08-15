@@ -19,9 +19,13 @@ class Settings(BaseSettings):
     # TELEPHONY service
     TWILIO_API_KEY_SID: str
     TWILIO_API_KEY_SECRET: str
+    TWILIO_PHONE_NUMBER: str
 
     # TTS service
     ELEVENLABS_API_KEY: str
+
+    # Base url for application
+    NGROK_URL: str
 
     class Config:
         env_file = ".env"

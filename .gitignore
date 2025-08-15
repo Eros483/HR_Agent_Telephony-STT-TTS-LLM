@@ -1,3 +1,4 @@
 .env
 HR_Agent.egg-info/
 __pycache__/
+ngrok.yml
