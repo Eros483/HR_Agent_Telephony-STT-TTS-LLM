@@ -1,13 +1,12 @@
 # ----- Set up template for LLM to initialise convo @ src/prompt_templates/calling_agent.py -----
 
-def get_system_prompt(candidate_details: str, questions: list, end_of_call_phrase: str) -> dict:
+def get_system_prompt(candidate_details: str, questions: list) -> dict:
     """
     Generates the system prompt with clear instructions, persona, and goals.
 
     Args:
         candidate_details: A string with relevant details about the candidate.
         questions: A list of questions the AI needs to ask.
-        end_of_call_phrase: A unique phrase to signal the end of the conversation.
     """
     # Format the list of questions into a clean, numbered string for the prompt
     formatted_questions = "\n".join(f"{i+1}. {q}" for i, q in enumerate(questions))
@@ -21,8 +20,6 @@ def get_system_prompt(candidate_details: str, questions: list, end_of_call_phras
         "2. Ask only ONE question at a time from the provided list.\n"
         "3. Do NOT repeat questions.\n"
         "4. If the candidate is busy, politely ask for a better time to call back.\n"
-        "5. After you have asked all the questions, thank the candidate for their time and then say the exact phrase: "
-        f"'{end_of_call_phrase}'\n\n"
         f"--- Candidate Details ---\n{candidate_details}\n\n"
         f"--- Questions to Ask ---\n{formatted_questions}"
     )
