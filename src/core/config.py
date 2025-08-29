@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     TWILIO_API_KEY_SECRET: str
     TWILIO_PHONE_NUMBER: str
 
+    #NUMBER TO BE CALLED
+    CALL_TO_NUMBER: str
+
     # TTS service
     ELEVENLABS_API_KEY: str
 
