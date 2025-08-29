@@ -9,10 +9,6 @@ class Settings(BaseSettings):
     Central management for settings and configurations
     Reads .env file
     """
-    # LLM settings
-    VLLM_API_BASE: str
-    LLM_MODEL_NAME: str
-
     # STT service
     DEEPGRAM_API_KEY: str
 
@@ -23,16 +19,6 @@ class Settings(BaseSettings):
 
     #NUMBER TO BE CALLED
     CALL_TO_NUMBER: str
-
-    # TTS service
-    ELEVENLABS_API_KEY: str
-
-    # Base url for application
-    NGROK_URL: str
-
-    # Celery for handling workers
-    CELERY_BROKER_URL: str
-    CELERY_RESULT_BACKEND: str
 
     class Config:
         env_file = ".env"

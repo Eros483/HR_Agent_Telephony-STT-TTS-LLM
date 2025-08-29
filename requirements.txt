@@ -1,17 +1,5 @@
 # ----- Installing libraries @ requirements.txt -----
-fastapi
-uvicorn[standard]
-celery
-redis
-SQLAlchemy
-psycopg2-binary
 openai
 twilio
 deepgram-sdk
-google-cloud-texttospeech
-vllm
 python-dotenv
-pydantic-settings
-torch --index-url https://download.pytorch.org/whl/cu129
-torchvision --index-url https://download.pytorch.org/whl/cu129
-uvloop
